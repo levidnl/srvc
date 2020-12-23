@@ -1,0 +1,124 @@
+<html>
+
+    <head>
+        <title>Volunteer Map</title>
+        <style type="text/css">
+            html { height: 100% }
+            body { height: 100%; margin: 0; padding: 0 }
+            #map_canvas { height: 100% }
+        </style>
+
+
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHDjKeI9KGKUePNttGJZVx2kPpWhPcP8s&callback=initMap&libraries=&v=weekly"
+            defer
+        ></script>
+
+
+        <script type="text/javascript">
+
+            var contentDescription = "test content description";
+
+            const contentString =
+              '<div id="content">' +
+              '<div id="siteNotice">' +
+              "</div>" +
+              // TODO - move the heading into the database/csv file
+              '<h1 id="firstHeading" class="firstHeading">Senior Volunteer Services (SVS)</h1>' +
+              '<div id="bodyContent">' +
+              "<p><b>Mission Statement</b>" +
+              " " +
+              "We promote volunteer opportunities for mature adults both as a way to sustain the health and vitality of this growing population and to utilize the experience, knowledge and expertise of this valuable human resource to serve local community needs." +
+              "</p>" +
+              '<p><a href="https://seniorvolunteers.org/wp-content/uploads/2019/11/SVS-RSVP-Enrollment-Form.pdf">Volunteer Now</a> or <a href="https://seniorvolunteers.org/wp-content/uploads/2020/05/RSVP-Volunteer-Opportunities1.pdf">Learn More</a></p>' +
+              "</div>" +
+              "</div>";
+
+            // TODO - change to event based, add event description, date/time to list(s)
+            var locations = [
+                ["Senior Volunteer Services (SVS)", 35.253102, -120.667505, 1],
+                ["Mariposa Trail", 35.253954, -120.695727, 3],
+                ["Pirate's Cove", 35.375388, -120.718043, 2],
+                ["Pirate's Cove", 35.275388, -120.718043, 2],
+                ["Pirate's Cove", 35.175388, -120.718043, 2],
+                ["Soto Field", 35.114378, -120.605693, 1],
+            ];
+
+            function initialize() {
+
+                var myOptions = {
+                    //center: test,
+                    zoom: 12,
+                };
+
+                var map = new google.maps.Map(document.getElementById("default"), myOptions);
+
+                setMarkers(map,locations)
+                
+                // Center map on current location if allowed
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                        map.setCenter(initialLocation);
+                    });
+                }
+
+                // TODO - If current location is not allowed, allow for a user to enter a zip code
+
+                // TODO - add some buttons and fields to filter specific date(s) 
+
+            }
+
+            function setMarkers(map,locations){
+
+                var marker, i
+
+                for (i = 0; i < locations.length; i++) {  
+
+                    var organization = locations[i][0]
+                    var lat = locations[i][1]
+                    var long = locations[i][2]
+                    var add =  locations[i][3]
+
+                    latlngset = new google.maps.LatLng(lat, long);
+
+                    var marker = new google.maps.Marker({  
+                        map: map,
+                        title: organization,
+                        position: latlngset  
+                    });
+                    
+
+                    // TODO - shouldn't this function center the map on a marker when selected?
+                    map.setCenter(marker.getPosition())
+
+                    var content = "Organization Name: " + organization +  '</h3>' + "Address: " + add     
+
+                    var infowindow = new google.maps.InfoWindow()
+
+                    google.maps.event.addListener(marker,'click', (function(marker,infowindow) { 
+                        return function() {
+                            //hideAllInfoWindows(map);
+                            infowindow.setContent(contentString);
+                            infowindow.open(map,marker);
+                        };
+                    })(marker,infowindow));
+               
+                }
+
+                function hideAllInfoWindows(map) {
+                    markers.forEach(function(marker) {
+                        marker.infowindow.close(map, marker);
+                    }); 
+                }
+            }
+
+        </script>
+
+    </head>
+
+    <body onload="initialize()">
+        <div id="default" style="width:100%; height:100%"></div>
+    </body>
+
+</html>
