@@ -25,30 +25,6 @@
                 ["Smoothy the Old People", "Spoon the cocunut", "https://seniorvolunteers.org/wp-content/uploads/2019/11/SVS-RSVP-Enrollment-Form.pdf", "Senior Volunteer Services (SVS)", "https://seniorvolunteers.org/", 35.114378, -120.605693]
             ];
 
-            var contentStringTest =
-                '<div id="content">' +
-                '<div id="siteNotice">' +
-                "</div>" +
-                // TODO - move the heading into the database/csv file
-                '<h1 id="firstHeading" class="firstHeading">' +
-                    eventData[0][0] + 
-                '</h1>' +
-                '<div id="bodyContent">' +
-                "<p><b>Mission Statement</b>" +
-                " " +
-                "We promote volunteer opportunities for mature adults both as a way to sustain the health and vitality of this growing population and to utilize the experience, knowledge and expertise of this valuable human resource to serve local community needs." +
-                "</p>" +
-                '<p><a href="https://seniorvolunteers.org/wp-content/uploads/2019/11/SVS-RSVP-Enrollment-Form.pdf">Volunteer Now</a> or <a href="https://seniorvolunteers.org/wp-content/uploads/2020/05/RSVP-Volunteer-Opportunities1.pdf">Learn More</a></p>' +
-                "</div>" +
-                "</div>";
-
-            var locations = [
-                ["Test Senior Volunteer Services (SVS)", 35.253102, -120.667505, "InfoWindow1"],
-                ["Mariposa Trail", 35.253954, -120.695727, contentStringTest],
-                ["Pirate's Cove", 35.375388, -120.718043, "InfoWindow3"],
-                ["Soto Field", 35.114378, -120.605693, "InfoWindow4"],
-            ];
-
             function initialize() {
 
                 var myOptions = {
@@ -57,7 +33,7 @@
 
                 var map = new google.maps.Map(document.getElementById("default"), myOptions);
 
-                setMarkers(map,locations)
+                setMarkers(map,eventData)
                 
                 // Center map on current location if allowed
                 if (navigator.geolocation) {
@@ -67,22 +43,21 @@
                     });
                 }
 
-                // TODO - If current location is not allowed, allow for a user to enter a zip code
-
-                // TODO - add some buttons and fields to filter specific date(s) 
-
             }
 
-            function setMarkers(map,locations){
+            function setMarkers(map,eventData){
 
                 var marker, i
 
-                for (i = 0; i < locations.length; i++) {  
-
-                    var organization = locations[i][0]
-                    var lat = locations[i][1]
-                    var long = locations[i][2]
-                    var add =  locations[i][3]
+                for (i = 0; i < eventData.length; i++) {  
+                    // [Event Title, Event Description, Direct Link to Volunteer, Org Title, Org Main Website, Latitude, Longitude]
+                    var eventTitle = eventData[i][0]
+                    var eventDesc = eventData[i][1]
+                    var eventLink = eventData[i][2]
+                    var orgTitle = eventData[i][3]
+                    var orgMainPage = eventData[i][4]
+                    var lat = eventData[i][5]
+                    var long = eventData[i][6]
 
                     var contentStringTest =
                         '<div id="content">' +
@@ -90,14 +65,18 @@
                         "</div>" +
                         // TODO - move the heading into the database/csv file
                         '<h1 id="firstHeading" class="firstHeading">' +
-                            eventData[i][0] + 
+                            eventTitle + 
                         '</h1>' +
                         '<div id="bodyContent">' +
-                        "<p><b>Mission Statement</b>" +
+                        "<p><b>Event Description</b>" +
                         " " +
-                        "We promote volunteer opportunities for mature adults both as a way to sustain the health and vitality of this growing population and to utilize the experience, knowledge and expertise of this valuable human resource to serve local community needs." +
+                            eventDesc +
                         "</p>" +
-                        '<p><a href="https://seniorvolunteers.org/wp-content/uploads/2019/11/SVS-RSVP-Enrollment-Form.pdf">Volunteer Now</a> or <a href="https://seniorvolunteers.org/wp-content/uploads/2020/05/RSVP-Volunteer-Opportunities1.pdf">Learn More</a></p>' +
+                        '<p><a href=' + 
+                            eventLink + 
+                        '>Volunteer Now</a></p>' +
+                        "</p>" +
+                        '<p><b>Organized By </b><a href="https://seniorvolunteers.org/wp-content/uploads/2020/05/RSVP-Volunteer-Opportunities1.pdf">OrgTitle</a></p>' +
                         "</div>" +
                         "</div>";                    
 
@@ -105,10 +84,9 @@
 
                     var marker = new google.maps.Marker({  
                         map: map,
-                        title: organization,
+                        title: orgTitle,
                         position: latlngset  
                     });
-                    
 
                     map.setCenter(marker.getPosition())
                
