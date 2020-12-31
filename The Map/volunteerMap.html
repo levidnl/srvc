@@ -19,9 +19,10 @@
 
             var eventData = [
                 // [Event Title, Event Description, Direct Link to Volunteer, Org Title, Org Main Website, Latitude, Longitude]
+                // Pull data from Google Sheet; see automated column "Automated var eventData List Format"; simply copy paste to populate the following
                 ["Feeding the Old People", "Spoon the cocunut", "https://seniorvolunteers.org/wp-content/uploads/2019/11/SVS-RSVP-Enrollment-Form.pdf", "Senior Volunteer Services (SVS)", "https://seniorvolunteers.org/", 35.253102, -120.667505],
-                ["Eating the Old People", "Spoon the cocunut", "https://seniorvolunteers.org/wp-content/uploads/2019/11/SVS-RSVP-Enrollment-Form.pdf", "Senior Volunteer Services (SVS)", "https://seniorvolunteers.org/", 35.253954, -120.695727],
-                ["Drinking the Old People", "Spoon the cocunut", "https://seniorvolunteers.org/wp-content/uploads/2019/11/SVS-RSVP-Enrollment-Form.pdf", "Senior Volunteer Services (SVS)", "https://seniorvolunteers.org/", 35.375388, -120.718043],
+                ["Playing with Old People", "Desc2", "https://www.volunteerslo.org/need/index?q=united+way", "United Way of San Luis Obispo", "https://www.unitedwayslo.org", 35.279577, -120.6602],
+                ["Stealing Old People", "Desc3", "https://storage.googleapis.com/t-mha-org/uploads/GG%20Farm%20Volunteer2020.pdf", "Growing Grounds Farm and Nursery", "https://www.t-mha.org/program-details.php?id=13", 35.2609288365175, -120.634443379516],
                 ["Smoothy the Old People", "Spoon the cocunut", "https://seniorvolunteers.org/wp-content/uploads/2019/11/SVS-RSVP-Enrollment-Form.pdf", "Senior Volunteer Services (SVS)", "https://seniorvolunteers.org/", 35.114378, -120.605693]
             ];
 
@@ -50,7 +51,7 @@
                 var marker, i
 
                 for (i = 0; i < eventData.length; i++) {  
-                    // [Event Title, Event Description, Direct Link to Volunteer, Org Title, Org Main Website, Latitude, Longitude]
+
                     var eventTitle = eventData[i][0]
                     var eventDesc = eventData[i][1]
                     var eventLink = eventData[i][2]
@@ -59,25 +60,28 @@
                     var lat = eventData[i][5]
                     var long = eventData[i][6]
 
-                    var contentStringTest =
+                    var infoWinHTML =
                         '<div id="content">' +
-                        '<div id="siteNotice">' +
-                        "</div>" +
-                        // TODO - move the heading into the database/csv file
-                        '<h1 id="firstHeading" class="firstHeading">' +
-                            eventTitle + 
-                        '</h1>' +
-                        '<div id="bodyContent">' +
-                        "<p><b>Event Description</b>" +
-                        " " +
-                            eventDesc +
-                        "</p>" +
-                        '<p><a href=' + 
-                            eventLink + 
-                        '>Volunteer Now</a></p>' +
-                        "</p>" +
-                        '<p><b>Organized By </b><a href="https://seniorvolunteers.org/wp-content/uploads/2020/05/RSVP-Volunteer-Opportunities1.pdf">OrgTitle</a></p>' +
-                        "</div>" +
+                            '<div id="siteNotice">' +
+                            "</div>" +
+                            '<h1 id="firstHeading" class="firstHeading">' +
+                                eventTitle + 
+                            '</h1>' +
+                            '<div id="bodyContent">' +
+                                "<p>" +
+                                " " +
+                                    eventDesc +
+                                "</p>" +
+                                '<p><a href=' + 
+                                    eventLink + 
+                                '>Volunteer Now</a></p>' +
+                                "</p>" +
+                                '<p><b>Organized By </b><a href=' +
+                                    orgMainPage +
+                                '>' +
+                                    orgTitle +
+                                '</a></p>' +
+                            "</div>" +
                         "</div>";                    
 
                     latlngset = new google.maps.LatLng(lat, long);
@@ -90,7 +94,7 @@
 
                     map.setCenter(marker.getPosition())
                
-                    attachSecretMessage(marker, contentStringTest);
+                    attachSecretMessage(marker, infoWinHTML);
                 
                 }
             }
