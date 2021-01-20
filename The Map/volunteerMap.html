@@ -6,6 +6,27 @@
             html { height: 100% }
             body { height: 100%; margin: 0; padding: 0 }
             #map_canvas { height: 100% }
+            /* The animation code */
+            @keyframes ex {
+              0%   {background-color:green; left:0px; top:0px;}
+              25%  {background-color:darkgreen; left:20px; top:0px;}
+              50%  {background-color:darkblue; left:20px; top:20px;}
+              75%  {background-color:lightgray; left:0px; top:20px;}
+              100% {background-color:white; left:0px; top:0px;}
+            }
+
+            /* The element to apply the animation to */
+            h1 {
+              color:white;
+              width: 105px;
+              height: 100px;
+              position: relative;
+              background-color: white;
+              background-image: linear-gradient(darkblue, darkgreen);
+              animation-name: ex;
+              animation-duration: 0.25s;
+              animation-iteration-count: 1;
+            }
         </style>
 
 
@@ -35,7 +56,7 @@
                 var map = new google.maps.Map(document.getElementById("default"), myOptions);
 
                 setMarkers(map,eventData)
-                
+
                 // Center map on current location if allowed
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (position) {
@@ -50,7 +71,7 @@
 
                 var marker, i
 
-                for (i = 0; i < eventData.length; i++) {  
+                for (i = 0; i < eventData.length; i++) {
 
                     var eventTitle = eventData[i][0]
                     var eventDesc = eventData[i][1]
@@ -65,15 +86,15 @@
                             '<div id="siteNotice">' +
                             "</div>" +
                             '<h1 id="firstHeading" class="firstHeading">' +
-                                eventTitle + 
+                                eventTitle +
                             '</h1>' +
                             '<div id="bodyContent">' +
                                 "<p>" +
                                 " " +
                                     eventDesc +
                                 "</p>" +
-                                '<p><a href=' + 
-                                    eventLink + 
+                                '<p><a href=' +
+                                    eventLink +
                                 '>Volunteer Now</a></p>' +
                                 "</p>" +
                                 '<p><b>Organized By </b><a href=' +
@@ -82,20 +103,20 @@
                                     orgTitle +
                                 '</a></p>' +
                             "</div>" +
-                        "</div>";                    
+                        "</div>";
 
                     latlngset = new google.maps.LatLng(lat, long);
 
-                    var marker = new google.maps.Marker({  
+                    var marker = new google.maps.Marker({
                         map: map,
                         title: orgTitle,
-                        position: latlngset  
+                        position: latlngset
                     });
 
                     map.setCenter(marker.getPosition())
-               
+
                     attachSecretMessage(marker, infoWinHTML);
-                
+
                 }
             }
 
