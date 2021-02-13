@@ -66,18 +66,19 @@
         <script type="text/javascript">
 
             var eventData = [
-                // [Event Title, Event Description, Direct Link to Volunteer, Org Title, Org Main Website, Latitude, Longitude]
+                // [Event Title, Event Description, Direct Link to Volunteer, Org Title, Org Main Website, Latitude, Longitude, Google Map Icon URL]
                 // Pull data from Google Sheet; see automated column "Automated var eventData List Format"; simply copy paste to populate the following
-                ["Nursery Volunteer", "Individual or small group volunteer opportunities to work with our clients Tuesday through Friday from 9:00am to 1:00pm", "https://storage.googleapis.com/t-mha-org/uploads/GG%20Farm%20Volunteer2020.pdf", "Growing Grounds Farm San Luis Obispo", "https://www.t-mha.org/program-details.php?id=13", 35.260389, -120.633804],
-                ["Homeless Shelter Volunteer", "Shelter Greeter Volunteer", "https://www.volunteerslo.org/need/detail/?need_id=558858", "United Way", "https://www.unitedwayslo.org/", 35.2796388690561, -120.660111936166],
-                ["SLO Food Bank Volunteer", "Morning Warehouse Shift", "https://storage.googleapis.com/t-mha-org/uploads/GG%20Farm%20Volunteer2020.pdf", "SLO Food Bank", "https://www.slofoodbank.org/", 35.238126844149, -120.630788179302],
-                ["ECOSLO Committee Member", "ECOSLO Committee Member Application", "https://docs.google.com/forms/d/e/1FAIpQLSccmtB6bLa7PWHFYurNyRiKulzm0RN_RrPmTccx0ZQNkdX5aA/viewform?vc=0&c=0&w=1", "ECOSLO", "https://ecoslo.org/", 35.2801063282481, -120.630788179302]
+                ["Nursery Volunteer", "Individual or small group volunteer opportunities to work with our clients Tuesday through Friday from 9:00am to 1:00pm", "https://storage.googleapis.com/t-mha-org/uploads/GG%20Farm%20Volunteer2020.pdf", "Growing Grounds Farm San Luis Obispo", "https://www.t-mha.org/program-details.php?id=13", 35.260389, -120.633804, "http://maps.google.com/mapfiles/kml/shapes/parks.png"],
+                ["Homeless Shelter Volunteer", "Shelter Greeter Volunteer", "https://www.volunteerslo.org/need/detail/?need_id=558858", "United Way", "https://www.unitedwayslo.org/", 35.2796388690561, -120.660111936166, "http://maps.google.com/mapfiles/kml/shapes/man.png"],
+                ["SLO Food Bank Volunteer", "Morning Warehouse Shift", "https://storage.googleapis.com/t-mha-org/uploads/GG%20Farm%20Volunteer2020.pdf", "SLO Food Bank", "https://www.slofoodbank.org/", 35.238126844149, -120.630788179302, "http://maps.google.com/mapfiles/kml/shapes/dining.png"],
+                ["ECOSLO Committee Member", "ECOSLO Committee Member Application", "https://docs.google.com/forms/d/e/1FAIpQLSccmtB6bLa7PWHFYurNyRiKulzm0RN_RrPmTccx0ZQNkdX5aA/viewform?vc=0&c=0&w=1", "ECOSLO", "https://ecoslo.org/", 35.2801063282481, -120.659332395309, "http://maps.google.com/mapfiles/kml/shapes/water.png"],
             ];
 
             function initialize() {
 
                 var myOptions = {
                     zoom: 12,
+                    mapTypeId: 'hybrid',
                 };
 
                 var map = new google.maps.Map(document.getElementById("default"), myOptions);
@@ -107,6 +108,7 @@
                     var orgMainPage = eventData[i][4]
                     var lat = eventData[i][5]
                     var long = eventData[i][6]
+                    var markerIcon = eventData[i][7]
 
                     var infoWinHTML =
                         '<div id="content">' +
@@ -137,7 +139,8 @@
                     var marker = new google.maps.Marker({
                         map: map,
                         title: orgTitle,
-                        position: latlngset
+                        position: latlngset,
+                        icon: markerIcon
                     });
 
                     map.setCenter(marker.getPosition())
