@@ -1,89 +1,182 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/8.2.7/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/8.2.7/firebase-auth.js"></script>
-    <script defer src="/__/firebase/8.2.7/firebase-database.js"></script>
-    <script defer src="/__/firebase/8.2.7/firebase-firestore.js"></script>
-    <script defer src="/__/firebase/8.2.7/firebase-functions.js"></script>
-    <script defer src="/__/firebase/8.2.7/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/8.2.7/firebase-storage.js"></script>
-    <script defer src="/__/firebase/8.2.7/firebase-analytics.js"></script>
-    <script defer src="/__/firebase/8.2.7/firebase-remote-config.js"></script>
-    <script defer src="/__/firebase/8.2.7/firebase-performance.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <head>
+        <title>Volunteer Map</title>
+        <style type="text/css">
+            html { height: 100% }
+            body { height: 100%; margin: 0; padding: 0 }
+            #map_canvas { height: 100% }
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+            .gm-style .gm-style-iw-c .gm-style-iw-d::-webkit-scrollbar-corner {
+              background-color: forestgreen;
+            }
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+            /*style the box*/
+         .gm-style .gm-style-iw-c {
+            background-color: forestgreen;
+            top: 0;
+            left: 0;
+            width: 400px;
+            height: auto;
+            padding-top: 0px;
+            display: block;
+            overflow: hidden;
+         }
 
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+         /*style the p tag*/
+         .gm-style .gm-style-iw #google-popup p{
+            padding: 10px;
+         }
+
+         .gm-style .gm-style-iw-d {
+           background-color: inherit;
+           overflow: hidden !important;
+         }
+
+        /*style the arrow*/
+        .gm-style div div div div div div div div {
+            background-color: forestgreen;
+            padding: 0;
+            margin: 0;
+            padding: 0;
+            top: 0;
+            color: #fff;
+            font-size: 16px;
         }
-      });
-    </script>
-  </body>
+
+        /*style the link*/
+        .gm-style div div div div div div div div a {
+            color: #f1f1f1;
+        }
+
+        .gm-style div div div div div div div div p {
+            color: #f1f1f1;
+            font-weight: lighter;
+        }
+
+        </style>
+
+
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHDjKeI9KGKUePNttGJZVx2kPpWhPcP8s&callback=initMap&libraries=&v=weekly"
+            defer
+        ></script>
+
+
+        <script type="text/javascript">
+
+            var eventData = [
+                // [Event Title, Event Description, Direct Link to Volunteer, Org Title, Org Main Website, Latitude, Longitude, Google Map Icon URL]
+                // Pull data from Google Sheet; see automated column "Automated var eventData List Format"; simply copy paste to populate the following
+                ["Nursery Volunteer", "Individual or small group volunteer opportunities to work with our clients Tuesday through Friday from 9:00am to 1:00pm", "https://storage.googleapis.com/t-mha-org/uploads/GG%20Farm%20Volunteer2020.pdf", "Growing Grounds Farm San Luis Obispo", "https://www.t-mha.org/program-details.php?id=13", 35.260389, -120.633804, "http://maps.google.com/mapfiles/kml/shapes/parks.png"],
+                ["Homeless Shelter Volunteer", "Shelter Greeter Volunteer", "https://www.volunteerslo.org/need/detail/?need_id=558858", "United Way", "https://www.unitedwayslo.org/", 35.2796388690561, -120.660111936166, "http://maps.google.com/mapfiles/kml/shapes/man.png"],
+                ["SLO Food Bank Volunteer", "Morning Warehouse Shift", "https://storage.googleapis.com/t-mha-org/uploads/GG%20Farm%20Volunteer2020.pdf", "SLO Food Bank", "https://www.slofoodbank.org/", 35.238126844149, -120.630788179302, "http://maps.google.com/mapfiles/kml/shapes/dining.png"],
+                ["ECOSLO Committee Member", "ECOSLO Committee Member Application", "https://docs.google.com/forms/d/e/1FAIpQLSccmtB6bLa7PWHFYurNyRiKulzm0RN_RrPmTccx0ZQNkdX5aA/viewform?vc=0&c=0&w=1", "ECOSLO", "https://ecoslo.org/", 35.2801063282481, -120.659332395309, "http://maps.google.com/mapfiles/kml/shapes/water.png"],
+            ];
+
+            function initialize() {
+
+                var myOptions = {
+                    zoom: 11,
+                    // Available Map Types are: 'roadmap', 'satellite', 'hybrid', & 'terrain'
+                    mapTypeId: 'terrain',
+                };
+
+                var map = new google.maps.Map(document.getElementById("default"), myOptions);
+
+                setMarkers(map,eventData)
+
+                // Center map on current location if allowed
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                        map.setCenter(initialLocation);
+                    });
+                }
+
+            }
+
+            function setMarkers(map,eventData){
+
+                var marker, i
+
+                for (i = 0; i < eventData.length; i++) {
+
+                    var eventTitle = eventData[i][0]
+                    var eventDesc = eventData[i][1]
+                    var eventLink = eventData[i][2]
+                    var orgTitle = eventData[i][3]
+                    var orgMainPage = eventData[i][4]
+                    var lat = eventData[i][5]
+                    var long = eventData[i][6]
+                    var markerIcon = eventData[i][7]
+
+                    var infoWinHTML =
+                        '<div id="content">' +
+                            '<div id="siteNotice">' +
+                            "</div>" +
+                            '<h1 id="firstHeading" class="firstHeading">' +
+                                eventTitle +
+                            '</h1>' +
+                            '<div id="bodyContent">' +
+                                "<p>" +
+                                " " +
+                                    eventDesc +
+                                "</p>" +
+                                '<p><a href=' +
+                                    eventLink +
+                                '>Volunteer Now</a></p>' +
+                                "</p>" +
+                                '<p><b>Organized By </b><a href=' +
+                                    orgMainPage +
+                                '>' +
+                                    orgTitle +
+                                '</a></p>' +
+                            "</div>" +
+                        "</div>";
+
+                    latlngset = new google.maps.LatLng(lat, long);
+
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        title: orgTitle,
+                        position: latlngset,
+                        icon: markerIcon
+                    });
+
+                    map.setCenter(marker.getPosition())
+
+                    attachSecretMessage(marker, infoWinHTML);
+
+                }
+            }
+
+            // Attaches an info window to a marker with the provided message. When the
+            // marker is clicked, the info window will open with the secret message.
+
+            function attachSecretMessage(marker, secretMessage) {
+                var infowindow = new google.maps.InfoWindow({
+                    content: secretMessage,
+                });
+                marker.addListener('click', function () {
+                // create a custom property of the InfoWindow, defaults to a value that evaluates as false
+                if (infowindow.isOpen) {
+                    infowindow.close(marker.get("map"), marker);
+                    infowindow.isOpen = false;
+                }
+                else {
+                    infowindow.open(marker.get("map"), marker);
+                    infowindow.isOpen = true;
+                }
+              });
+           }
+
+        </script>
+
+    </head>
+
+    <body onload="initialize()">
+        <div id="default" style="width:100%; height:100%"></div>
+    </body>
+
 </html>
