@@ -77,8 +77,9 @@
             function initialize() {
 
                 var myOptions = {
-                    zoom: 12,
-                    mapTypeId: 'hybrid',
+                    zoom: 11,
+                    // Available Map Types are: 'roadmap', 'satellite', 'hybrid', & 'terrain'
+                    mapTypeId: 'terrain',
                 };
 
                 var map = new google.maps.Map(document.getElementById("default"), myOptions);
